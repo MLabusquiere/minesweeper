@@ -1,6 +1,6 @@
 package io.maxlab.minesweeper.core;
 
-import io.maxlab.minesweeper.map.MockGridFactory;
+import io.maxlab.minesweeper.grid.MockGridFactory;
 import io.maxlab.minesweeper.print.MWGridPrinterFactory;
 import org.junit.Before;
 import org.junit.Test;

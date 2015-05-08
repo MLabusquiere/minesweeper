@@ -1,10 +1,9 @@
-package io.maxlab.minesweeper.map;
+package io.maxlab.minesweeper.grid;
 
-import io.maxlab.minesweeper.map.cell.CaseFactory;
+import io.maxlab.minesweeper.grid.cell.CellFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 public class GridStructureTest {
 
-    private static final CaseFactory CASE_FACTORY = new CaseFactory();
+    private static final CellFactory CASE_FACTORY = new CellFactory();
     private final Character[] map = new Character[]{
             '1', '1', '1', '0', '0',
             '1', 'X', '1', '0', '0',

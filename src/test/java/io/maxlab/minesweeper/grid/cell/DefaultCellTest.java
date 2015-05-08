@@ -1,4 +1,4 @@
-package io.maxlab.minesweeper.map.cell;
+package io.maxlab.minesweeper.grid.cell;
 
 import io.maxlab.minesweeper.core.MWCell;
 import io.maxlab.minesweeper.core.exception.AlreadyRevealedCaseException;

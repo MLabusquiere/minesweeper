@@ -1,7 +1,7 @@
 package io.maxlab.minesweeper.core;
 
 import io.maxlab.minesweeper.interaction.MWInteractionServiceFactory;
-import io.maxlab.minesweeper.map.MWMapFactory;
+import io.maxlab.minesweeper.grid.MWGridFactory;
 import io.maxlab.minesweeper.print.MWGridPrinterFactory;
 
 import java.io.InputStream;
@@ -18,7 +18,7 @@ public class MWFactory {
     private final PrintStream outStream;
     private final InputStream inStream;
 
-    private MWGrid.Factory mapFactory = new MWMapFactory();
+    private MWGrid.Factory mapFactory = new MWGridFactory();
     private Factory interactionFactory;
     private MWGridPrinterFactory printerFactory = new MWGridPrinterFactory();
 
@@ -38,7 +38,7 @@ public class MWFactory {
 
         try {
             final Configuration configuration = interactionService.askConfiguration();
-            final MWGrid newMap = mapFactory.getNewMap(configuration.width, configuration.height, configuration.bombCount, newMapPrinter);
+            final MWGrid newMap = mapFactory.getNewGrid(configuration.width, configuration.height, configuration.bombCount, newMapPrinter);
             return new MWGame(newMap, interactionService);
         } catch (IllegalArgumentException e) {
             interactionService.handleNotificationError(e.getMessage());

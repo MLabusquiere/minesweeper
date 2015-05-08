@@ -1,4 +1,4 @@
-package io.maxlab.minesweeper.map;
+package io.maxlab.minesweeper.grid;
 
 import io.maxlab.minesweeper.core.MWCell;
 import io.maxlab.minesweeper.core.MWGrid;
@@ -8,7 +8,7 @@ import java.util.*;
 import static java.util.stream.Collectors.toList;
 
 /**
- * An helper class that help to build the map
+ * An helper class that help to build the grid
  */
 class GridStructure {
     private static final Random RANDOM_GENERATOR = new Random();
@@ -142,7 +142,7 @@ class GridStructure {
         }
         long mapSize = (long) width * (long) height;
         if (mapSize > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("The map is too big");
+            throw new IllegalArgumentException("The grid is too big");
         }
         if (bomb >= mapSize || bomb <= 0) {
             throw new IllegalArgumentException("The number of bomb can't be out bound");

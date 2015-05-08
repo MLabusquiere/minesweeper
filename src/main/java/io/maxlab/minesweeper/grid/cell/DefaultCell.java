@@ -1,4 +1,4 @@
-package io.maxlab.minesweeper.map.cell;
+package io.maxlab.minesweeper.grid.cell;
 
 import io.maxlab.minesweeper.core.MWCell;
 import io.maxlab.minesweeper.core.exception.AlreadyRevealedCaseException;
@@ -6,23 +6,26 @@ import io.maxlab.minesweeper.core.exception.AlreadyRevealedCaseException;
 /**
  *
  */
-class MineCell implements MWCell {
-
+class DefaultCell implements MWCell {
+    private char symbol = NOT_REVEALED_SYMBOL;
     private boolean isRevealed = false;
 
     @Override
     public boolean isBomb() {
-        return true;
+        return false;
     }
 
     @Override
     public char getSymbol() {
-        return isRevealed ? BOMB_SYMBOL : NOT_REVEALED_SYMBOL;
+        return isRevealed ? symbol : NOT_REVEALED_SYMBOL;
     }
 
     @Override
     public void setBombNeighbor(int bombNumber) {
-         throw new IllegalArgumentException("This case is a bomb");
+        if (bombNumber < 0 || bombNumber > 8) {
+            throw new IllegalArgumentException("The case can have only between 0 and 8 neighbor");
+        }
+        symbol = Character.forDigit(bombNumber, 10);
     }
 
     @Override
@@ -31,17 +34,16 @@ class MineCell implements MWCell {
             throw new AlreadyRevealedCaseException();
         }
         isRevealed = true;
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return symbol == '0';
     }
 
     @Override
     public boolean isRevealed() {
         return isRevealed;
     }
-
 }

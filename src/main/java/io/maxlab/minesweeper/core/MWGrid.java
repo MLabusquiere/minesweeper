@@ -5,7 +5,7 @@ package io.maxlab.minesweeper.core;
  */
 public interface MWGrid {
     /**
-     * Reveal a cell of the map given the coordinates.
+     * Reveal a cell of the grid given the coordinates.
      *
      * @param x Coordinates
      * @param y Coordinates
@@ -22,16 +22,16 @@ public interface MWGrid {
     MWCell getCase(int x, int y);
 
     /**
-     * The width of the map
+     * The width of the grid
      *
-     * @return the width of the map
+     * @return the width of the grid
      */
     int width();
 
     /**
-     * The height of the map
+     * The height of the grid
      *
-     * @return The height of the map
+     * @return The height of the grid
      */
     int height();
 
@@ -42,12 +42,12 @@ public interface MWGrid {
     boolean isAllCellHadBeenRevealed();
 
     /**
-     * Create a new map with the same configuration
+     * Create a new grid with the same configuration
      */
     void reinit();
 
     /**
-     * Print the map
+     * Print the grid
      */
     void print();
 
@@ -58,7 +58,7 @@ public interface MWGrid {
     }
 
     public interface Factory {
-        MWGrid getNewMap(int width, int height, int bombNumber, MWGridPrinter printer);
+        MWGrid getNewGrid(int width, int height, int bombNumber, MWGridPrinter printer);
 
     }
 }

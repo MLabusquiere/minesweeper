@@ -1,9 +1,9 @@
-package io.maxlab.minesweeper.map;
+package io.maxlab.minesweeper.grid;
 
 import io.maxlab.minesweeper.core.MWCell;
 import io.maxlab.minesweeper.core.MWGrid;
 import io.maxlab.minesweeper.core.MWGridPrinter;
-import io.maxlab.minesweeper.map.cell.CaseFactory;
+import io.maxlab.minesweeper.grid.cell.CellFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class MockGridFactory {
-    private static final MWGrid.MapCaseFactory caseFactory = new CaseFactory();
+    private static final MWGrid.MapCaseFactory caseFactory = new CellFactory();
 
     public static GridStructure getGridStructure(Character[] map, int width, int height, int bomb) {
         List<MWCell> list = Arrays.stream(map).

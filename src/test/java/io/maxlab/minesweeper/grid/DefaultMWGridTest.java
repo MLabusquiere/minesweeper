@@ -1,4 +1,4 @@
-package io.maxlab.minesweeper.map;
+package io.maxlab.minesweeper.grid;
 
 import io.maxlab.minesweeper.core.MWGrid;
 import io.maxlab.minesweeper.core.MWGridPrinter;

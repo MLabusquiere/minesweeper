@@ -1,12 +1,12 @@
-package io.maxlab.minesweeper.map;
+package io.maxlab.minesweeper.grid;
 
 import io.maxlab.minesweeper.core.MWGrid;
 import io.maxlab.minesweeper.core.MWGridPrinter;
 
-public class MWMapFactory implements MWGrid.Factory {
+public class MWGridFactory implements MWGrid.Factory {
 
     @Override
-    public MWGrid getNewMap(int width, int height, int bombNumber, MWGridPrinter printer) {
+    public MWGrid getNewGrid(int width, int height, int bombNumber, MWGridPrinter printer) {
         return new DefaultMWGrid(width, height, bombNumber, printer);
     }
 

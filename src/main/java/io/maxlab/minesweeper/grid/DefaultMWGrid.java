@@ -1,16 +1,16 @@
-package io.maxlab.minesweeper.map;
+package io.maxlab.minesweeper.grid;
 
 import io.maxlab.minesweeper.core.MWCell;
 import io.maxlab.minesweeper.core.MWGrid;
 import io.maxlab.minesweeper.core.MWGridPrinter;
 import io.maxlab.minesweeper.core.exception.WrongCoordinatesException;
-import io.maxlab.minesweeper.map.cell.CaseFactory;
+import io.maxlab.minesweeper.grid.cell.CellFactory;
 
 /**
  */
 class DefaultMWGrid implements MWGrid {
 
-    public static final CaseFactory DEFAULT_BOX_FACTORY = new CaseFactory();
+    public static final CellFactory DEFAULT_BOX_FACTORY = new CellFactory();
 
     private final GridStructure gridStructure;
     private final MWGridPrinter printer;
@@ -19,8 +19,8 @@ class DefaultMWGrid implements MWGrid {
         this(width, height, bomb, printer, DEFAULT_BOX_FACTORY);
     }
 
-    private DefaultMWGrid(int width, int height, int bomb, MWGridPrinter printer, CaseFactory caseFactory) {
-        this(new GridStructure(width, height, bomb, caseFactory), printer);
+    private DefaultMWGrid(int width, int height, int bomb, MWGridPrinter printer, CellFactory cellFactory) {
+        this(new GridStructure(width, height, bomb, cellFactory), printer);
     }
 
     DefaultMWGrid(GridStructure gridStructure, MWGridPrinter printer) {
@@ -67,7 +67,7 @@ class DefaultMWGrid implements MWGrid {
 
     private void check(int x, int y) {
         if (x < 0 || x >= gridStructure.width() || y * gridStructure.width() + x >= gridStructure.size() || y < 0) {
-            throw new WrongCoordinatesException("The coordinates (" + x + "," + y + ") can't fit in the map");
+            throw new WrongCoordinatesException("The coordinates (" + x + "," + y + ") can't fit in the grid");
         }
     }
 
