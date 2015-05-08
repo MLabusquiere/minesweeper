@@ -1,8 +1,11 @@
 package io.maxlab.minesweeper.map;
 
+import io.maxlab.minesweeper.map.cell.CaseFactory;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -11,6 +14,7 @@ import static org.junit.Assert.assertTrue;
 
 public class GridStructureTest {
 
+    private static final CaseFactory CASE_FACTORY = new CaseFactory();
     private final Character[] map = new Character[]{
             '1', '1', '1', '0', '0',
             '1', 'X', '1', '0', '0',
@@ -68,6 +72,24 @@ public class GridStructureTest {
     public void testSize() throws Exception {
         assertEquals(25, gridStructure.size());
 
+    }
+
+    @Test
+    public void testRandomness() throws Exception {
+        final HashSet<Integer> indexes = new HashSet<>();
+        final int bombNumber = 5;
+        final int turnNumber = 10;
+        final GridStructure structure = new GridStructure(5, 6, bombNumber, CASE_FACTORY);
+        for (int i = 0; i < turnNumber; i++) {
+            structure.reinit();
+            for (int j = 0; j < structure.size(); j++) {
+                if(structure.getBox(j).isBomb()) {
+                    indexes.add(j);
+                }
+            }
+        }
+        assertTrue("Algorithm is not random : " + indexes.size() + " indexes different found",
+                indexes.size() > 2 * bombNumber);
     }
 
     private int getCoordinates(int x, int y) {
