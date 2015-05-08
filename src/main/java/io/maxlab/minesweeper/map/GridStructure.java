@@ -3,10 +3,7 @@ package io.maxlab.minesweeper.map;
 import io.maxlab.minesweeper.core.MWCell;
 import io.maxlab.minesweeper.core.MWGrid;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -15,19 +12,19 @@ import static java.util.stream.Collectors.toList;
  */
 class GridStructure {
     private static final Random RANDOM_GENERATOR = new Random();
-    private final MWGrid.MapCaseFactory boxFactory;
+    private final MWGrid.MapCaseFactory cellFactory;
     private final List<MWCell> mwCells;
     private final int bombsCount;
     private final int mapWidth;
     private final int mapHeight;
     private int revealedCase = 0;
 
-    public GridStructure(int width, int height, int bomb, MWGrid.MapCaseFactory boxFactory) {
+    public GridStructure(int width, int height, int bomb, MWGrid.MapCaseFactory cellFactory) {
         checkParameters(width, height, bomb);
         this.mapWidth = width;
         this.mapHeight = height;
         this.bombsCount = bomb;
-        this.boxFactory = boxFactory;
+        this.cellFactory = cellFactory;
         this.mwCells = new ArrayList<>(mapWidth * mapHeight);
         init();
     }
@@ -41,30 +38,24 @@ class GridStructure {
         this.mapHeight = height;
         this.bombsCount = bomb;
         this.mwCells = mwCells;
-        this.boxFactory = DefaultMWGrid.DEFAULT_BOX_FACTORY;
+        this.cellFactory = DefaultMWGrid.DEFAULT_BOX_FACTORY;
     }
 
     private void init() {
         mwCells.clear();
-        final LinkedList<Integer> allIndexes = new LinkedList<>();
-        for (int i = 0; i < mapWidth * mapHeight; i++) {
-            allIndexes.add(i);
+        int i = 0;
+        for (; i < bombsCount; i++) {
+            mwCells.add(cellFactory.getBomb());
         }
+        for (; i < mapWidth * mapHeight; i++) {
+            mwCells.add(cellFactory.getDefault());
+        }
+        Collections.shuffle(mwCells);
+        computeNeigbourg();
+        revealedCase = 0;
+    }
 
-        for (int i = 0; i > bombsCount; i++) {
-            final int pickedIndexForBomb = RANDOM_GENERATOR.nextInt(allIndexes.size() - i);
-            allIndexes.remove(pickedIndexForBomb);
-            allIndexes.addLast(pickedIndexForBomb);
-        }
-
-        for (int i = 0; i < mapWidth * mapHeight; i++) {
-            mwCells.add(boxFactory.getDefault());
-        }
-
-        for (int i = allIndexes.size() - bombsCount; i < allIndexes.size(); i++) {
-            final Integer bombIndex = allIndexes.get(i);
-            mwCells.add(bombIndex, boxFactory.getBomb());
-        }
+    private void computeNeigbourg() {
         for (int i = 0; i < mwCells.size(); i++) {
             if (getBox(i).isBomb()) {
                 continue;
@@ -78,7 +69,6 @@ class GridStructure {
             }
             getBox(i).setBombNeighbor(bombNumber);
         }
-        revealedCase = 0;
     }
 
     public boolean reveal(int index) {
